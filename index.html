@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Anup Ghimire | Student • Mathematics • Web Development</title>
+    <title>Anup Ghimire | Student • Mathematics • Full-Stack Development</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
@@ -262,10 +262,28 @@
         .portrait-placeholder::after {
             content: '';
             position: absolute;
-            width: 280px;
-            height: 280px;
+            width: 270px;
+            height: 270px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
             background-color: var(--primary-dark);
             border-radius: 50%;
+            z-index: 0;
+        }
+
+        .profile-img {
+            position: relative;
+            z-index: 1;
+            width: 260px;
+            height: 260px;
+            border-radius: 50%;
+            object-fit: cover;
+            object-position: center 45%;
+            border: 4px solid rgba(255,255,255,0.06);
+            box-shadow: var(--shadow-glow);
+            display: block;
+            transform: translateY(4px); /* nudge down to avoid top clipping */
         }
 
         @keyframes rotate {
@@ -276,42 +294,122 @@
         /* About Section */
         .about-content {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: 1fr 1fr;
             gap: 40px;
-            align-items: center;
+            align-items: start;
         }
 
-        .about-text p {
-            margin-bottom: 20px;
+        .about-text {
+            padding-right: 10px;
+        }
+
+        .about-intro {
+            font-weight: 600;
+            color: var(--text-primary);
+            font-size: 1.12rem;
+            margin-bottom: 6px;
+        }
+
+        .about-tagline {
+            font-style: italic;
             color: var(--text-secondary);
-            font-size: 1.1rem;
+            margin-bottom: 8px;
+            font-size: 1rem;
+        }
+
+        .location {
+            color: var(--accent-cyan);
+            font-weight: 500;
+            margin-bottom: 14px;
+            font-size: 0.95rem;
+        }
+
+        .about-list h4 {
+            margin: 12px 0 8px;
+            font-size: 1rem;
+            color: var(--accent-blue);
+        }
+
+        .about-list ul {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 12px 0;
+        }
+
+        .about-list li {
+            display: flex;
+            gap: 8px;
+            align-items: flex-start;
+            margin-bottom: 8px;
+            color: var(--text-secondary);
+        }
+
+        .about-list li::before {
+            content: "•";
+            color: var(--accent-cyan);
+            margin-right: 6px;
+            font-weight: 700;
         }
 
         .hobbies {
             display: flex;
             flex-wrap: wrap;
-            gap: 20px;
-            margin-top: 30px;
+            gap: 12px;
+            margin-top: 18px;
         }
 
         .hobby-item {
             display: flex;
             align-items: center;
             background-color: var(--card-bg);
-            padding: 10px 20px;
+            padding: 10px 16px;
             border-radius: var(--border-radius);
             transition: var(--transition);
         }
 
         .hobby-item:hover {
-            transform: translateY(-5px);
+            transform: translateY(-4px);
             box-shadow: var(--shadow-glow);
         }
 
         .hobby-icon {
             color: var(--accent-cyan);
             margin-right: 10px;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
+        }
+
+        .about-achievements {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 18px;
+        }
+
+        .achievement-item {
+            background: var(--card-bg);
+            padding: 16px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .achievement-item h3 {
+            margin: 0 0 8px 0;
+            font-size: 1.05rem;
+        }
+
+        .achievement-item p {
+            margin: 0;
+            color: var(--text-secondary);
+        }
+
+        @media (max-width: 700px) {
+            .about-content {
+                grid-template-columns: 1fr;
+            }
+
+            .about-achievements {
+                grid-template-columns: 1fr;
+            }
         }
 
         /* Skills Section */
@@ -403,8 +501,10 @@
         .project-image img {
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            object-fit: contain;
+            object-position: center;
             display: block;
+            background-color: transparent;
         }
 
         .project-content {
@@ -651,6 +751,12 @@
                 width: 230px;
                 height: 230px;
             }
+
+            .profile-img {
+                width: 220px;
+                height: 220px;
+                transform: translateY(3px);
+            }
         }
 
         @media (max-width: 576px) {
@@ -668,6 +774,12 @@
             
             .container {
                 width: 95%;
+            }
+
+            .profile-img {
+                width: 180px;
+                height: 180px;
+                transform: translateY(2px);
             }
         }
 
@@ -773,15 +885,15 @@
                     <div class="dynamic-text">
                         <span>Student</span>
                         <span>Mathematics Enthusiast</span>
-                        <span>Web Developer</span>
+                        <span>Full-Stack Enthusiast</span>
                         <span>Chess & Strategy</span>
                     </div>
-                    <p>Disciplined Class 12 student from Nepal with a strong mathematics foundation. Actively learning web development and building small frontend projects, focused on long‑term growth and skills development.</p>
-                    <a href="#contact" class="btn mt-30">Get In Touch</a>
+                    <p>Disciplined Class 12 student from Nepal with a strong mathematics foundation. Actively learning full‑stack development and building small projects, focused on long‑term growth and skills development.</p>
+                    <button type="button" id="openContact" class="btn mt-30">Get In Touch</button>
                 </div>
                 <div class="hero-image">
                     <div class="portrait-placeholder">
-                        <i class="fas fa-user-astronaut" style="font-size: 5rem; color: var(--accent-blue); position: relative; z-index: 1;"></i>
+                        <img src="assets/images/Profile.jpg" alt="Anup Ghimire" class="profile-img" loading="lazy">
                     </div>
                 </div>
             </div>
@@ -794,13 +906,28 @@
             <h2>About Me</h2>
             <div class="about-content">
                 <div class="about-text">
-                    <p>Student from Nepal.</p>
-                    <p>Class 10 (SEE) — 3.91 GPA. District Topper.</p>
-                    <p>Class 11 — 3.75 GPA.</p>
-                    <p>Interest in mathematics, problem-solving, and chess.</p>
-                    <p>Learning web development through practical projects and exercises.</p>
-                    <p>Working on communication and strategic thinking — calm, focused, and future-oriented.</p>
-                    
+                    <p class="about-intro">I'm a motivated student from Nepal focused on mathematics, problem-solving, and building web systems — skilled in development and actively expanding my backend skills. I enjoy building projects to learn by doing, with the goal of becoming a full‑stack developer who cares about product and experience.</p>
+                    <p class="about-tagline">I craft feel-first experiences and the systems behind them — thoughtful interfaces, reliable APIs, and a steady vibe across the stack.</p>
+                    <p class="location">Based in Nepal</p>
+
+                    <div class="about-list">
+                        <h4>Education</h4>
+                        <ul>
+                            <li><strong>Class 10 (SEE):</strong> 3.91 GPA — Sankhuwasabha District Topper</li>
+                            <li><strong>Class 11:</strong> 3.75 GPA</li>
+                        </ul>
+                    </div>
+
+                    <div class="about-list">
+                        <h4>Interests & Focus</h4>
+                        <ul>
+                            <li>Web development (HTML, CSS, JS)</li>
+                            <li>Mathematics & logic</li>
+                            <li>Chess strategy</li>
+                            <li>Self-improvement</li>
+                        </ul>
+                    </div>
+
                     <div class="hobbies">
                         <div class="hobby-item">
                             <i class="fas fa-chess hobby-icon"></i>
@@ -812,7 +939,7 @@
                         </div>
                         <div class="hobby-item">
                             <i class="fas fa-code hobby-icon"></i>
-                            <span>Web Development</span>
+                            <span>Development</span>
                         </div>
                         <div class="hobby-item">
                             <i class="fas fa-book hobby-icon"></i>
@@ -820,10 +947,11 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="about-achievements">
                     <div class="achievement-item">
-                        <h3>SEE District Topper</h3>
-                        <p>Recognized as district topper in the SEE examination.</p>
+                        <h3>SEE — Sankhuwasabha District Topper</h3>
+                        <p>Recognized as Sankhuwasabha district topper in the SEE examination.</p>
                     </div>
                     <div class="achievement-item">
                         <h3>Academic Excellence</h3>
@@ -831,7 +959,7 @@
                     </div>
                     <div class="achievement-item">
                         <h3>Chess</h3>
-                        <p>Competitive learning in chess (FIDE ID / rating — In Progress).</p>
+                        <p>Competitive learning in chess (Chess.com profile active; FIDE — in progress).</p>
                     </div>
                     <div class="achievement-item">
                         <h3>Personal Skill Development</h3>
@@ -847,13 +975,13 @@
         <div class="container">
             <h2>Skills & Expertise</h2>
             <div class="skills-container">
-                <!-- Skill 1: Web Development -->
+                <!-- Skill 1: Development -->
                 <div class="skill-item">
                     <div class="skill-header">
                         <i class="fas fa-code skill-icon"></i>
-                        <h3>Web Development</h3>
+                        <h3>Development</h3>
                     </div>
-                    <p>Learning frontend technologies and building practice projects with HTML, CSS and JavaScript.</p>
+                    <p>Learning web technologies and building practical projects with HTML, CSS and JavaScript; expanding into backend systems.</p>
                     <div class="skill-bar">
                         <div class="skill-progress" data-width="65"></div>
                     </div>
@@ -883,17 +1011,7 @@
                     </div>
                 </div>
                 
-                <!-- Skill 4: UI/UX Design -->
-                <div class="skill-item">
-                    <div class="skill-header">
-                        <i class="fas fa-palette skill-icon"></i>
-                        <h3>UI/UX Design</h3>
-                    </div>
-                    <p>Exploring design fundamentals and small UI experiments to improve usability and visual clarity.</p>
-                    <div class="skill-bar">
-                        <div class="skill-progress" data-width="58"></div>
-                    </div>
-                </div>
+
             </div>
         </div>
     </section>
@@ -928,7 +1046,7 @@
                     </div>
                     <div class="project-content">
                         <h3>Personal Portfolio Website</h3>
-                        <p>A simple, responsive portfolio built to showcase learning progress and small frontend projects.</p>
+                        <p>A simple, responsive portfolio built to showcase learning progress and small development projects.</p>
                         <div class="project-tech">
                             <span class="tech-tag">HTML</span>
                             <span class="tech-tag">CSS</span>
@@ -944,8 +1062,8 @@
                         <i class="fas fa-laptop-code"></i>
                     </div>
                     <div class="project-content">
-                        <h3>Practice Frontend Projects</h3>
-                        <p>Small applications and components focused on responsive layouts, DOM manipulation, and accessibility.</p>
+                        <h3>Practice Projects</h3>
+                        <p>Small applications and components focused on responsive layouts, DOM manipulation, accessibility, and basic backend integrations.</p>
                         <div class="project-tech">
                             <span class="tech-tag">HTML</span>
                             <span class="tech-tag">CSS</span>
@@ -982,8 +1100,8 @@
             <div class="services-grid">
                 <div class="service-card">
                     <i class="fas fa-laptop-code service-icon"></i>
-                    <h3>Frontend Web Development</h3>
-                    <p>Learning modern frontend workflows and building practical projects with HTML, CSS and JavaScript.</p>
+                    <h3>Full-Stack Development</h3>
+                    <p>Learning modern full-stack workflows and building practical projects with frontend and backend tools.</p>
                 </div>
                 
                 <div class="service-card">
@@ -1016,7 +1134,7 @@
                     <i class="fas fa-award cert-icon"></i>
                     <div>
                         <h3>SEE Examination</h3>
-                        <p>District Topper</p>
+                        <p>Sankhuwasabha District Topper</p>
                     </div>
                 </div>
                 
@@ -1083,13 +1201,14 @@
                 <div class="contact-info">
                     <h3>Open to learning opportunities</h3>
                     <p>Available for collaborations, academic or technical discussions, and mentorship opportunities.</p>
+                    <p><strong>Based in Nepal</strong></p>
                     
                     <div class="social-links">
-                        <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
-                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
-                        <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#" class="social-link"><i class="fas fa-chess"></i></a>
-                        <a href="mailto:yourname@email.com" class="social-link"><i class="fas fa-envelope"></i></a>
+                        <a href="https://github.com/anup2065" class="social-link" target="_blank" rel="noopener"><i class="fab fa-github"></i></a>
+                        <a href="https://www.linkedin.com/in/anup-ghimire-3b05713a3/" class="social-link" target="_blank" rel="noopener"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="https://www.instagram.com/anup_ghimire_/" class="social-link" target="_blank" rel="noopener"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.chess.com/member/anupghimire12" class="social-link" target="_blank" rel="noopener"><i class="fas fa-chess"></i></a>
+                        <a href="mailto:anup67393@gmail.com" class="social-link"><i class="fas fa-envelope"></i></a>
                     </div>
                     
                     <div class="mt-30">
@@ -1133,6 +1252,22 @@
                 hamburger.innerHTML = '<i class="fas fa-bars"></i>';
             });
         });
+
+        // Open and focus contact form from hero button
+        const openContactBtn = document.getElementById('openContact');
+        if (openContactBtn) {
+            openContactBtn.addEventListener('click', () => {
+                const contactSection = document.querySelector('#contact');
+                if (contactSection) {
+                    contactSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    // focus name input after a short delay so scroll completes
+                    setTimeout(() => {
+                        const nameInput = document.getElementById('name');
+                        if (nameInput) nameInput.focus();
+                    }, 600);
+                }
+            });
+        }
         
         // Animate skill bars when scrolled into view
         const skillBars = document.querySelectorAll('.skill-progress');
