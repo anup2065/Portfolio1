@@ -236,12 +236,26 @@ if (document.readyState === 'loading') {
 // Header background on scroll
 window.addEventListener('scroll', () => {
     const header = document.querySelector('header');
+    const isLightTheme = document.body.classList.contains('light-theme');
+    
     if (window.scrollY > 100) {
-        header.style.backgroundColor = 'rgba(10, 10, 15, 0.98)';
-        header.style.boxShadow = '0 5px 20px rgba(0, 0, 0, 0.3)';
+        // Darker/more opaque when scrolled for better visibility
+        if (isLightTheme) {
+            header.style.backgroundColor = 'rgba(255, 255, 255, 0.98)';
+            header.style.boxShadow = '0 5px 20px rgba(0, 0, 0, 0.15)';
+        } else {
+            header.style.backgroundColor = 'rgba(18, 18, 26, 0.98)';
+            header.style.boxShadow = '0 5px 20px rgba(0, 0, 0, 0.4)';
+        }
     } else {
-        header.style.backgroundColor = 'rgba(10, 10, 15, 0.95)';
-        header.style.boxShadow = 'none';
+        // Slightly less opaque when at top
+        if (isLightTheme) {
+            header.style.backgroundColor = 'rgba(255, 255, 255, 0.98)';
+            header.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.1)';
+        } else {
+            header.style.backgroundColor = 'rgba(18, 18, 26, 0.98)';
+            header.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.3)';
+        }
     }
 
     // Trigger animations
@@ -293,7 +307,7 @@ window.addEventListener('load', () => {
 const textItems = [
     'Student',
     'Mathematics Enthusiast', 
-    'Full-Stack Development',
+    'Full-Stack Dev',
     'Chess & Strategy'
 ];
 
