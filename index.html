@@ -858,13 +858,231 @@
             display: none;
         }
     </style>
+
+    <!-- Loading Screen -->
+    <div id="loading-screen">
+        <div class="loading-content">
+            <div class="loading-spinner"></div>
+            <h2>Loading...</h2>
+        </div>
+    </div>
+
+    <style>
+        /* Loading Screen Styles */
+        #loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #0a0a0f, #1a1a2e);
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+
+        #loading-screen.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loading-content {
+            text-align: center;
+            color: #00d9ff;
+        }
+
+        .loading-spinner {
+            width: 60px;
+            height: 60px;
+            border: 4px solid rgba(0, 217, 255, 0.1);
+            border-top: 4px solid #00d9ff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        #loading-screen h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            margin: 0;
+        }
+
+        /* Theme Toggle Styles */
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1001;
+            background-color: var(--card-bg);
+            border: 2px solid var(--accent-blue);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(0, 217, 255, 0.3);
+        }
+
+        .theme-toggle i {
+            font-size: 1.2rem;
+            color: var(--accent-blue);
+            transition: transform 0.3s ease;
+        }
+
+        /* Light Theme Variables */
+        :root {
+            --primary-dark: #0a0a0f;
+            --secondary-dark: #12121a;
+            --accent-blue: #00d9ff;
+            --accent-purple: #9d00ff;
+            --accent-cyan: #00ffea;
+            --text-primary: #ffffff;
+            --text-secondary: #b0b0d0;
+            --card-bg: #1a1a2e;
+            --card-hover: #252542;
+            --shadow-glow: 0 0 15px rgba(0, 217, 255, 0.3);
+            --shadow-glow-purple: 0 0 15px rgba(157, 0, 255, 0.3);
+            --transition: all 0.3s ease;
+            --border-radius: 10px;
+            --section-spacing: 80px;
+        }
+
+        /* Light theme overrides */
+        body.light-theme {
+            --primary-dark: #e8eaed;
+            --secondary-dark: #e9ecef;
+            --accent-blue: #0056b3;
+            --accent-purple: #6f42c1;
+            --accent-cyan: #17a2b8;
+            --text-primary: #212529;
+            --text-secondary: #6c757d;
+            --card-bg: #ffffff;
+            --card-hover: #f8f9fa;
+            --shadow-glow: 0 0 15px rgba(0, 86, 179, 0.3);
+            --shadow-glow-purple: 0 0 15px rgba(111, 66, 193, 0.3);
+        }
+
+        body.light-theme header {
+            background-color: rgba(248, 249, 250, 0.95) !important;
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0, 86, 179, 0.1);
+        }
+
+        body.light-theme .nav-links a {
+            color: var(--text-primary) !important;
+        }
+
+        body.light-theme .logo {
+            color: var(--text-primary) !important;
+            -webkit-text-fill-color: var(--text-primary) !important;
+        }
+
+        body.light-theme .hamburger {
+            color: var(--accent-blue) !important;
+        }
+
+        body.light-theme .hero {
+            background: linear-gradient(rgba(248, 249, 250, 0.9), rgba(233, 236, 239, 0.8)), url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%23f8f9fa"/><circle cx="50" cy="50" r="1" fill="%230056b3" opacity="0.3"/><circle cx="20" cy="20" r="1" fill="%236f42c1" opacity="0.3"/><circle cx="80" cy="60" r="1" fill="%2317a2b8" opacity="0.3"/></svg>');
+        }
+
+        body.light-theme footer {
+            background-color: var(--secondary-dark);
+            border-top: 1px solid rgba(0, 86, 179, 0.1);
+        }
+
+        /* Light theme borders and shadows for better section distinction */
+        body.light-theme .project-card {
+            border: 1px solid rgba(0, 86, 179, 0.1);
+            box-shadow: 0 2px 8px rgba(0, 86, 179, 0.08);
+        }
+
+        body.light-theme .skill-item {
+            border: 1px solid rgba(0, 86, 179, 0.1);
+            box-shadow: 0 2px 8px rgba(0, 86, 179, 0.08);
+        }
+
+        body.light-theme .service-card {
+            border: 1px solid rgba(0, 86, 179, 0.1);
+            box-shadow: 0 2px 8px rgba(0, 86, 179, 0.08);
+        }
+
+        body.light-theme .cert-item {
+            border: 1px solid rgba(0, 86, 179, 0.1);
+            box-shadow: 0 2px 8px rgba(0, 86, 179, 0.08);
+        }
+
+        body.light-theme .achievement-item {
+            border: 1px solid rgba(0, 86, 179, 0.1);
+            box-shadow: 0 2px 8px rgba(0, 86, 179, 0.08);
+        }
+
+        body.light-theme .hobby-item {
+            border: 1px solid rgba(0, 86, 179, 0.1);
+            box-shadow: 0 2px 8px rgba(0, 86, 179, 0.08);
+        }
+
+        body.light-theme .contact-form {
+            border: 1px solid rgba(0, 86, 179, 0.1);
+            box-shadow: 0 2px 8px rgba(0, 86, 179, 0.08);
+        }
+
+        body.light-theme .form-control {
+            border: 1px solid rgba(0, 86, 179, 0.3);
+            color: #495057 !important;
+        }
+
+        body.light-theme .form-control::placeholder {
+            color: #6c757d !important;
+        }
+
+        body.light-theme .form-group label {
+            color: #495057 !important;
+        }
+
+        body.light-theme .btn {
+            border: 2px solid transparent;
+        }
+
+        body.light-theme .btn:hover {
+            border-color: var(--accent-blue);
+        }
+
+        /* Section separators for better visual hierarchy */
+        body.light-theme section {
+            border-bottom: 1px solid rgba(0, 86, 179, 0.05);
+        }
+
+        body.light-theme section:last-of-type {
+            border-bottom: none;
+        }
+    </style>
 </head>
 <body>
+    <!-- Theme Toggle Button -->
+    <button class="theme-toggle" id="theme-toggle" title="Toggle theme">
+        <i class="fas fa-moon"></i>
+    </button>
+
     <!-- Navigation -->
     <header>
         <div class="container">
             <nav>
-                <div class="logo">ANUP GHIMIRE</div>
+                <a class="logo" href="javascript:location.reload();">ANUP GHIMIRE</a>
                 <div class="hamburger" id="hamburger">
                     <i class="fas fa-bars"></i>
                 </div>
@@ -1054,7 +1272,7 @@
                         <h3>Personal Portfolio Website</h3>
                         <p>A simple, responsive portfolio built to showcase learning progress and small development projects.</p>
                         <div class="project-tech">
-                            <span class="tech-tag">HTML</span>
+                               <span class="tech-tag">HTML</span>
                             <span class="tech-tag">CSS</span>
                             <span class="tech-tag">JavaScript</span>
                         </div>
@@ -1065,34 +1283,34 @@
                 <!-- Project 2 -->
                 <div class="project-card">
                     <div class="project-image">
-                        <i class="fas fa-laptop-code"></i>
+                        <img src="assets/images/11computer.png" alt="NEB Class 11 Computer Science Guide — thumbnail" loading="lazy">
                     </div>
                     <div class="project-content">
-                        <h3>Practice Projects</h3>
-                        <p>Small applications and components focused on responsive layouts, DOM manipulation, accessibility, and basic backend integrations.</p>
+                        <h3>NEB Class 11 Computer Science Guide</h3>
+                        <p>A guide for Class 11 Computer Science under NEB curriculum, featuring a comprehensive note and solutions to important questions from past year exam papers.</p>
                         <div class="project-tech">
                             <span class="tech-tag">HTML</span>
                             <span class="tech-tag">CSS</span>
                             <span class="tech-tag">JavaScript</span>
                         </div>
-                        <a href="#" class="project-link">View Project <i class="fas fa-arrow-right"></i></a>
+                        <a href="https://computer-11.netlify.app/" class="project-link" target="_blank" rel="noopener">View Project <i class="fas fa-arrow-right"></i></a>
                     </div>
                 </div>
 
                 <!-- Project 3 -->
                 <div class="project-card">
                     <div class="project-image">
-                        <i class="fas fa-paint-brush"></i>
+                        <img src="assets/images/timer.png" alt="Custom Timer for High Achievers — thumbnail" loading="lazy">
                     </div>
                     <div class="project-content">
-                        <h3>UI Experiments</h3>
-                        <p>Design-focused experiments exploring layout, color, and interaction patterns to build UI intuition.</p>
+                        <h3>Custom Timer for High Achievers</h3>
+                        <p>A sleek, customizable timer designed for productivity enthusiasts and high achievers to optimize their time management and focus sessions.</p>
                         <div class="project-tech">
                             <span class="tech-tag">HTML</span>
                             <span class="tech-tag">CSS</span>
                             <span class="tech-tag">JavaScript</span>
                         </div>
-                        <a href="#" class="project-link">View Project <i class="fas fa-arrow-right"></i></a>
+                        <a href="https://timer-an.netlify.app/" class="project-link" target="_blank" rel="noopener">View Project <i class="fas fa-arrow-right"></i></a>
                     </div>
                 </div>
             </div>
@@ -1144,14 +1362,7 @@
                     </div>
                 </div>
 
-                <div class="cert-item">
-                    <i class="fas fa-certificate cert-icon"></i>
-                    <div>
-                        <h3>Academic Excellence</h3>
-                        <p>Class 10 — 3.91 GPA</p>
-                        <p>Class 11 — 3.75 GPA</p>
-                    </div>
-                </div>
+
 
                 <div class="cert-item">
                     <i class="fas fa-chess-king cert-icon"></i>
@@ -1454,6 +1665,57 @@
             const yAxis = (window.innerHeight / 2 - e.pageY) / 50;
 
             heroSection.style.backgroundPosition = `${xAxis}px ${yAxis}px`;
+        });
+
+        // Loading Animation
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                const loadingScreen = document.getElementById('loading-screen');
+                loadingScreen.classList.add('hidden');
+
+                // Remove loading screen from DOM after animation
+                setTimeout(() => {
+                    loadingScreen.style.display = 'none';
+                }, 500);
+            }, 1500); // Show loading for 1.5 seconds
+
+            // Trigger other animations
+            animateSkillBars();
+            animateProjectCards();
+        });
+
+        // Theme Toggle Functionality
+        const themeToggle = document.getElementById('theme-toggle');
+        const body = document.body;
+        const themeIcon = themeToggle.querySelector('i');
+
+        // Check for saved theme preference - Default to dark theme
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'light') {
+            body.classList.add('light-theme');
+            themeIcon.classList.remove('fa-moon');
+            themeIcon.classList.add('fa-sun');
+        } else {
+            // Explicitly ensure dark theme is default
+            body.classList.remove('light-theme');
+            themeIcon.classList.remove('fa-sun');
+            themeIcon.classList.add('fa-moon');
+            localStorage.setItem('theme', 'dark');
+        }
+
+        // Theme toggle click handler
+        themeToggle.addEventListener('click', () => {
+            body.classList.toggle('light-theme');
+
+            if (body.classList.contains('light-theme')) {
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+                localStorage.setItem('theme', 'light');
+            } else {
+                themeIcon.classList.remove('fa-sun');
+                themeIcon.classList.add('fa-moon');
+                localStorage.setItem('theme', 'dark');
+            }
         });
     </script>
 </body>
