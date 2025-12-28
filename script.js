@@ -63,6 +63,7 @@ const messageInput = document.getElementById('message');
 const nameError = document.getElementById('nameError');
 const emailError = document.getElementById('emailError');
 const messageError = document.getElementById('messageError');
+const recaptchaError = document.getElementById('recaptchaError');
 const successMessage = document.getElementById('successMessage');
 const submitBtn = document.querySelector('#contactForm button[type="submit"]');
 
@@ -108,6 +109,15 @@ contactForm.addEventListener('submit', (e) => {
         messageInput.classList.remove('error-border');
     }
 
+    // Validate reCAPTCHA
+    const recaptchaResponse = grecaptcha.getResponse();
+    if (recaptchaResponse === '') {
+        recaptchaError.style.display = 'block';
+        isValid = false;
+    } else {
+        recaptchaError.style.display = 'none';
+    }
+
     // If form is valid, send email
     if (isValid) {
         setLoading(true);
@@ -124,6 +134,7 @@ contactForm.addEventListener('submit', (e) => {
                 successMessage.style.display = 'block';
                 successMessage.textContent = 'Thank you! Your message has been sent successfully.';
                 contactForm.reset();
+                grecaptcha.reset(); // Reset reCAPTCHA
                 setLoading(false);
 
                 // Hide success message after 5 seconds
@@ -149,29 +160,78 @@ contactForm.addEventListener('submit', (e) => {
     }
 });
 
-// Smooth scrolling for all anchor links (fixed)
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function(e) {
-        const targetId = this.getAttribute('href');
-        if (!targetId || targetId === '#') return;
+// Custom smooth scrolling function with fast animation
+let scrollAnimationId = null;
 
-        const targetElement = document.querySelector(targetId);
-        if (!targetElement) return;
+function smoothScrollTo(targetPosition, duration = 800) {
+    // Cancel any ongoing scroll animation
+    if (scrollAnimationId !== null) {
+        cancelAnimationFrame(scrollAnimationId);
+    }
 
-        e.preventDefault();
+    const startPosition = window.pageYOffset;
+    const distance = targetPosition - startPosition;
+    let startTime = null;
 
-        const headerHeight = document.querySelector('header').offsetHeight;
-        const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - headerHeight;
+    // Easing function for smooth acceleration and deceleration
+    function easeInOutCubic(t) {
+        return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+    }
 
-        window.scrollTo({
-            top: targetPosition,
-            behavior: 'smooth'
+    function animation(currentTime) {
+        if (startTime === null) startTime = currentTime;
+        const timeElapsed = currentTime - startTime;
+        const progress = Math.min(timeElapsed / duration, 1);
+        const ease = easeInOutCubic(progress);
+
+        window.scrollTo(0, startPosition + distance * ease);
+
+        if (timeElapsed < duration) {
+            scrollAnimationId = requestAnimationFrame(animation);
+        } else {
+            scrollAnimationId = null;
+        }
+    }
+
+    scrollAnimationId = requestAnimationFrame(animation);
+}
+
+// Smooth scrolling for all anchor links with fast animation
+function initSmoothScrolling() {
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            const targetId = this.getAttribute('href');
+            if (!targetId || targetId === '#') return;
+
+            const targetElement = document.querySelector(targetId);
+            if (!targetElement) return;
+
+            e.preventDefault();
+
+            const headerHeight = document.querySelector('header').offsetHeight;
+            const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - headerHeight;
+            
+            // Calculate duration based on distance for consistent speed
+            const distance = Math.abs(targetPosition - window.pageYOffset);
+            const baseDuration = 600; // Base duration in ms
+            const maxDuration = 1000; // Max duration for very long scrolls
+            const duration = Math.min(baseDuration + (distance / 3), maxDuration);
+
+            // Use custom smooth scroll with dynamic duration
+            smoothScrollTo(targetPosition, duration);
+
+            // Update URL without triggering anchor jump
+            history.pushState(null, '', targetId);
         });
-
-        // Update URL without triggering anchor jump / without needing hash change to "work"
-        history.pushState(null, '', targetId);
     });
-});
+}
+
+// Initialize smooth scrolling when DOM is ready
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initSmoothScrolling);
+} else {
+    initSmoothScrolling();
+}
 
 // Header background on scroll
 window.addEventListener('scroll', () => {
@@ -228,6 +288,84 @@ window.addEventListener('load', () => {
     animateSkillBars();
     animateProjectCards();
 });
+
+// Dynamic Text Animation - Fixed
+const textItems = [
+    'Student',
+    'Mathematics Enthusiast', 
+    'Full-Stack Development',
+    'Chess & Strategy'
+];
+
+let currentIndex = 0;
+let dynamicTextSpan = null;
+let animationInterval = null;
+
+function initDynamicText() {
+    const dynamicTextContainer = document.querySelector('.dynamic-text');
+    if (!dynamicTextContainer) return;
+
+    // Create a single span element for the animated text
+    dynamicTextSpan = document.createElement('span');
+    dynamicTextContainer.innerHTML = '';
+    dynamicTextContainer.appendChild(dynamicTextSpan);
+
+    // Set initial styling for the container (only if not already set by CSS)
+    if (!dynamicTextContainer.style.position) {
+        dynamicTextContainer.style.position = 'relative';
+    }
+    if (!dynamicTextContainer.style.height) {
+        dynamicTextContainer.style.height = '2.8rem';
+    }
+
+    // Set initial styling for the span element (set once)
+    dynamicTextSpan.style.position = 'absolute';
+    dynamicTextSpan.style.width = '100%';
+    dynamicTextSpan.style.left = '0';
+    dynamicTextSpan.style.top = '0';
+    dynamicTextSpan.style.color = 'var(--accent-cyan)';
+    dynamicTextSpan.style.fontSize = '1.8rem';
+    dynamicTextSpan.style.fontWeight = '700';
+    dynamicTextSpan.style.lineHeight = '2.8rem';
+    dynamicTextSpan.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+    
+    // Set initial text
+    dynamicTextSpan.textContent = textItems[currentIndex];
+    dynamicTextSpan.style.opacity = '1';
+    dynamicTextSpan.style.transform = 'translateY(0)';
+}
+
+function cycleText() {
+    if (!dynamicTextSpan) return;
+    
+    // Fade out effect
+    dynamicTextSpan.style.opacity = '0';
+    dynamicTextSpan.style.transform = 'translateY(-20px)';
+    
+    setTimeout(() => {
+        currentIndex = (currentIndex + 1) % textItems.length;
+        dynamicTextSpan.textContent = textItems[currentIndex];
+        
+        // Fade in effect
+        dynamicTextSpan.style.opacity = '1';
+        dynamicTextSpan.style.transform = 'translateY(0)';
+    }, 300);
+}
+
+// Initialize and start the animation after DOM is ready
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+        initDynamicText();
+        if (dynamicTextSpan) {
+            animationInterval = setInterval(cycleText, 2500);
+        }
+    });
+} else {
+    initDynamicText();
+    if (dynamicTextSpan) {
+        animationInterval = setInterval(cycleText, 2500);
+    }
+}
 
 // Theme Toggle Functionality
 const themeToggle = document.getElementById('theme-toggle');

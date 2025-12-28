@@ -8,6 +8,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </head>
 <body>
     <!-- Loading Screen -->
@@ -52,10 +53,7 @@
                     <h1>Anup Ghimire</h1>
                     <div class="tagline">Solving Problems with Math & Code</div>
                     <div class="dynamic-text">
-                        <span>Student</span>
-                        <span>Mathematics Enthusiast</span>
-                        <span>Full-Stack Enthusiast</span>
-                        <span>Chess & Strategy</span>
+                        <!-- Text will be dynamically inserted by JavaScript -->
                     </div>
                     <p>Disciplined Class 12 student from Nepal with a strong mathematics foundation. Actively learning full‑stack development and building small projects, focused on long‑term growth and skills development.</p>
                 </div>
@@ -351,6 +349,11 @@
                             <label for="message">Your Message</label>
                             <textarea id="message" class="form-control" placeholder="How can I help you?"></textarea>
                             <div class="error" id="messageError">Please enter your message</div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="g-recaptcha" data-sitekey="YOUR_SITE_KEY_HERE"></div>
+                            <div class="error" id="recaptchaError">Please complete the reCAPTCHA verification</div>
                         </div>
 
                         <button type="submit" class="btn">Send Message</button>

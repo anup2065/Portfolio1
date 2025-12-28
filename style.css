@@ -209,28 +209,22 @@ nav {
 }
 
 .dynamic-text {
-    /* match span font-size so only full lines appear during slide */
-    height: 1.8rem;
+    height: 2.8rem;
     overflow: hidden;
     margin-bottom: 30px;
+    position: relative;
 }
 
 .dynamic-text span {
     display: block;
     color: var(--accent-cyan);
     font-size: 1.8rem;
-    line-height: 1.8rem; /* ensures perfect vertical alignment in the container */
     font-weight: 700;
-    animation: slide 10s ease-in-out infinite;
-}
-
-@keyframes slide {
-    /* use percentage steps so the movement equals whole span heights (robust across sizes) */
-    0% { transform: translateY(0); }
-    25% { transform: translateY(-100%); }
-    50% { transform: translateY(-200%); }
-    75% { transform: translateY(-300%); }
-    100% { transform: translateY(0); }
+    line-height: 2.8rem;
+    position: absolute;
+    width: 100%;
+    left: 0;
+    top: 0;
 }
 
 .portrait-placeholder {
@@ -709,6 +703,16 @@ footer {
     .hero h1 {
         font-size: 2.8rem;
     }
+
+    .dynamic-text {
+        height: 2.4rem;
+        margin-bottom: 28px;
+    }
+
+    .dynamic-text span {
+        font-size: 1.5rem;
+        line-height: 2.4rem;
+    }
 }
 
 @media (max-width: 768px) {
@@ -767,6 +771,16 @@ footer {
 
     .tagline {
         font-size: 1.2rem;
+    }
+
+    .dynamic-text {
+        height: 2.2rem;
+        margin-bottom: 25px;
+    }
+
+    .dynamic-text span {
+        font-size: 1.4rem;
+        line-height: 2.2rem;
     }
 
     h2 {
