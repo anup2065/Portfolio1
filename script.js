@@ -109,17 +109,35 @@ contactForm.addEventListener('submit', (e) => {
         messageInput.classList.remove('error-border');
     }
 
-    // Validate reCAPTCHA
-    const recaptchaResponse = grecaptcha.getResponse();
-    if (recaptchaResponse === '') {
+    // Validate reCAPTCHA - robust validation to prevent bypass
+    let recaptchaValid = false;
+    try {
+        // Check if grecaptcha is loaded
+        if (typeof grecaptcha === 'undefined' || !grecaptcha.getResponse) {
+            recaptchaError.textContent = 'reCAPTCHA is not loaded. Please refresh the page.';
+            recaptchaError.style.display = 'block';
+            isValid = false;
+        } else {
+            const recaptchaResponse = grecaptcha.getResponse();
+            // Check if response exists and is not empty
+            if (!recaptchaResponse || recaptchaResponse === '' || recaptchaResponse.length === 0) {
+                recaptchaError.textContent = 'Please complete the reCAPTCHA verification';
+                recaptchaError.style.display = 'block';
+                isValid = false;
+            } else {
+                recaptchaValid = true;
+                recaptchaError.style.display = 'none';
+            }
+        }
+    } catch (error) {
+        console.error('reCAPTCHA validation error:', error);
+        recaptchaError.textContent = 'reCAPTCHA validation failed. Please try again.';
         recaptchaError.style.display = 'block';
         isValid = false;
-    } else {
-        recaptchaError.style.display = 'none';
     }
 
-    // If form is valid, send email
-    if (isValid) {
+    // If form is valid AND reCAPTCHA is valid, send email
+    if (isValid && recaptchaValid) {
         setLoading(true);
 
         const templateParams = {

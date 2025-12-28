@@ -745,6 +745,12 @@ footer {
 
     .hero h1 {
         font-size: 2.5rem;
+        display: none; /* Hide h1 on mobile to avoid duplication with header logo */
+    }
+
+    /* Add padding-top to hero section on mobile to account for fixed header */
+    .hero {
+        padding-top: 100px;
     }
 
     .portrait-placeholder {
@@ -768,6 +774,12 @@ footer {
 @media (max-width: 576px) {
     .hero h1 {
         font-size: 2rem;
+        display: none; /* Hide h1 on small mobile to avoid duplication with header logo */
+    }
+    
+    /* Ensure hero has proper spacing on small mobile */
+    .hero {
+        padding-top: 90px;
     }
 
     .tagline {
